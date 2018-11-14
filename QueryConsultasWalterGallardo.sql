@@ -6,7 +6,7 @@ select count(*) from flights;
 
 select origin , avg(ArrDelay) as ArrivalDelay , avg(DepDelay) as DepartureDelay 
 From flights 
-group by Origin
+group by origin
 
 /* 3.Retard promig d’arribada dels vols, per mesos i segons l’aeroport origen. */
 
@@ -41,11 +41,11 @@ group by b.Airport
  
 /*6.L’identificador dels 10 avions que més distància han recorregut fent vols. */
 
-Select a.Description ,b.FlightNum ,b.Distance
-from flights as  b
-inner join carriers as a
-on a.CarrierCode=b.UniqueCarrier
-group by b.FlightNum
+
+Select  TailNum, sum(Distance) as TotalDistance
+from flights 
+group by TailNum
+order by TotalDistance desc
 limit 10
 
 
@@ -54,7 +54,7 @@ limit 10
 /*Companyies amb el seu retard promig només d’aquelles les quals els seus vols arriben
  al seu destí amb un retràs promig major de 10 minuts. */
  
- Select a.Description as Company , avg(b.ArrDelay) as Arrival
+Select a.Description as Company , avg(b.ArrDelay) as Arrival
 from flights as  b
 inner join carriers as a
 on a.CarrierCode=b.UniqueCarrier
